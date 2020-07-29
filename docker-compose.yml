@@ -1,4 +1,8 @@
-version: '3'
+version: '3.5'
+
+x-pg-credentials: &pg-credentials
+  POSTGRES_USERNAME: "root" 
+  POSTGRES_PASSWORD: "admin"
 
 services:
   app:
@@ -7,3 +11,20 @@ services:
       - .:/app
     ports:
       - 3000:3000
+    environment:
+      <<: *pg-credentials
+      POSTGRES_HOST: "db"
+      POSTGRES_PORT: 5432
+    depends_on:
+      - db
+  db:
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      <<: *pg-credentials
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  pg-data:
