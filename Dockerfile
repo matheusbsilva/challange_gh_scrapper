@@ -1,19 +1,19 @@
 FROM ruby:2.7.1-buster
 
-WORKDIR /app
+ENV INSTALL_PATH /app/
 
-COPY Gemfile* /app/
+WORKDIR $INSTALL_PATH
+
+COPY Gemfile* $INSTALL_PATH
 
 RUN bundle install
 
-COPY . /app/
+COPY . $INSTALL_PATH
 
 EXPOSE 3000
 
 # Add script to let restart server even if a server.pid exists
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 
 CMD rails server -b 0.0.0.0 -p 3000
 
