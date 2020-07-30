@@ -1,7 +1,7 @@
 version: '3.5'
 
 x-pg-credentials: &pg-credentials
-  POSTGRES_USERNAME: "root" 
+  POSTGRES_USER: "root" 
   POSTGRES_PASSWORD: "admin"
 
 services:
