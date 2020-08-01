@@ -29,7 +29,21 @@ class ParseProfile
     user = username
     element_query = "a[href=\"/#{user}?tab=followers\"]"
     element = @document.search(element_query).css('span').first
-    element&.text
+    element&.text.to_i
+  end
+
+  def num_following
+    user = username
+    element_query = "a[href=\"/#{user}?tab=following\"]"
+    element = @document.search(element_query).css('span').first
+    element&.text.to_i
+  end
+
+  def num_stars
+    user = username
+    element_query = "a[href=\"/#{user}?tab=stars\"]"
+    element = @document.search(element_query).css('span').first
+    element&.text.to_i
   end
 
   private
