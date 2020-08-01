@@ -13,6 +13,12 @@ class ParseProfile
     @parsed_fields
   end
 
+  def fullname
+    element_query = 'span.vcard-fullname'
+    element = @document.css(element_query).first
+    element&.text
+  end
+
   private
 
   def fields
