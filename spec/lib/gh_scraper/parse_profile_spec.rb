@@ -12,7 +12,9 @@ describe ParseProfile do
       num_following: 1,
       num_stars: 7,
       num_contributions_last_year: 653,
-      profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4'
+      profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4',
+      organization: 'Ruby Association,NaCl',
+      location: 'Matsue, Japan'
     }
   }
 
@@ -82,6 +84,14 @@ describe ParseProfile do
 
     it 'parse profile_img' do
       expect(@parser_profile.profile_img).to eq(html_profile[:profile_img])
+    end
+
+    it 'parse organization' do
+      expect(@parser_profile.organization).to eq(html_profile[:organization])
+    end
+
+    it 'parse location' do
+      expect(@parser_profile.location).to eq(html_profile[:location])
     end
   end
 

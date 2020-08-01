@@ -64,6 +64,16 @@ class ParseProfile
     element.attributes['src'].value unless element.nil?
   end
 
+  def organization
+    element = @document.css('li.vcard-detail').css('span.p-org').first
+    element&.text
+  end
+
+  def location
+    element = @document.css('li.vcard-detail').css('span.p-label').first
+    element&.text
+  end
+
   private
 
   def fields
