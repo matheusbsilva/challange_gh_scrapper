@@ -11,7 +11,8 @@ describe ParseProfile do
       num_followers: 7800,
       num_following: 1,
       num_stars: 7,
-      num_contributions_last_year: 653
+      num_contributions_last_year: 653,
+      profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4'
     }
   }
 
@@ -77,6 +78,10 @@ describe ParseProfile do
 
     it 'parse num_contributions_last_year' do
       expect(@parser_profile.num_contributions_last_year).to eq(html_profile[:num_contributions_last_year])
+    end
+
+    it 'parse profile_img' do
+      expect(@parser_profile.profile_img).to eq(html_profile[:profile_img])
     end
   end
 

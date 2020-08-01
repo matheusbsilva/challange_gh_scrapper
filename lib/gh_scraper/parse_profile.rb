@@ -59,6 +59,11 @@ class ParseProfile
     element.text[/\n\s+(?<value>\d+)/, :value].to_i unless element.nil?
   end
 
+  def profile_img
+    element = @document.css('div.clearfix').css('div.position-relative').css('img.avatar').first
+    element.attributes['src'].value unless element.nil?
+  end
+
   private
 
   def fields
