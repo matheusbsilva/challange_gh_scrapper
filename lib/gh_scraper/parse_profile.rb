@@ -51,6 +51,14 @@ class ParseProfile
     valuesk_to_i(element.text)
   end
 
+  def num_contributions_last_year
+    element_query = 'div.js-yearly-contributions'
+    element = @document.search(element_query).css('h2').first
+
+    # Extract only the number of contributions from string
+    element.text[/\n\s+(?<value>\d+)/, :value].to_i unless element.nil?
+  end
+
   private
 
   def fields

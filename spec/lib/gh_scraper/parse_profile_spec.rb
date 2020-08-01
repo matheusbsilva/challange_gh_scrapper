@@ -10,7 +10,8 @@ describe ParseProfile do
       username: 'matz',
       num_followers: 7800,
       num_following: 1,
-      num_stars: 7
+      num_stars: 7,
+      num_contributions_last_year: 653
     }
   }
 
@@ -73,5 +74,10 @@ describe ParseProfile do
     it 'parse num_stars' do
       expect(@parser_profile.num_stars).to eq(html_profile[:num_stars])
     end
+
+    it 'parse num_contributions_last_year' do
+      expect(@parser_profile.num_contributions_last_year).to eq(html_profile[:num_contributions_last_year])
+    end
   end
+
 end
