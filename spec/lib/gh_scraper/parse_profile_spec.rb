@@ -8,9 +8,7 @@ describe ParseProfile do
       html: file_fixture('github_profile.html').read,
       fullname: 'Yukihiro "Matz" Matsumoto',
       username: 'matz',
-      num_followers: 7800,
-      num_following: 1,
-      num_stars: 7,
+      num_followers: 7800, num_following: 1, num_stars: 7,
       num_contributions_last_year: 653,
       profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4',
       organization: 'Ruby Association,NaCl',
@@ -92,6 +90,10 @@ describe ParseProfile do
 
     it 'parse location' do
       expect(@parser_profile.location).to eq(html_profile[:location])
+    end
+
+    it 'parse method returns hash with all fields' do
+      expect(@parser_profile.parse).to eq(html_profile.except(:html))
     end
   end
 

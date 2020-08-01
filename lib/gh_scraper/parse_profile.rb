@@ -10,6 +10,10 @@ class ParseProfile
   end
 
   def parse
+    @parsed_fields.each do |key, _|
+      # Call method of given field name
+      @parsed_fields[key] = send(key)
+    end
     @parsed_fields
   end
 
@@ -34,21 +38,21 @@ class ParseProfile
     element_query = "a[href=\"/#{user}?tab=followers\"]"
     element = @document.search(element_query).css('span').first
 
-    valuesk_to_i(element.text)
+    valuesk_to_i(element&.text)
   end
 
   def num_following
     user = username
     element_query = "a[href=\"/#{user}?tab=following\"]"
     element = @document.search(element_query).css('span').first
-    valuesk_to_i(element.text)
+    valuesk_to_i(element&.text)
   end
 
   def num_stars
     user = username
     element_query = "a[href=\"/#{user}?tab=stars\"]"
     element = @document.search(element_query).css('span').first
-    valuesk_to_i(element.text)
+    valuesk_to_i(element&.text)
   end
 
   def num_contributions_last_year
