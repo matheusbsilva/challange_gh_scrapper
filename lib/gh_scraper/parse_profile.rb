@@ -19,6 +19,19 @@ class ParseProfile
     element&.text
   end
 
+  def username
+    element_query = 'span.vcard-username'
+    element = @document.css(element_query).first
+    element&.text
+  end
+
+  def num_followers
+    user = username
+    element_query = "a[href=\"/#{user}?tab=followers\"]"
+    element = @document.search(element_query).css('span').first
+    element&.text
+  end
+
   private
 
   def fields
