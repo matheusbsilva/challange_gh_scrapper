@@ -72,4 +72,19 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       expect(json).to be_a Array
     end
   end
+
+  describe 'GET /api/v1/profile/:username' do
+    let!(:profile) { create(:profile) }
+
+    it 'returns 404 when user not found' do
+      get '/api/v1/profile/yyy'
+      expect(response).to have_http_status(:not_found)
+      expect(json).to be_a Hash
+    end
+
+    it 'returns 200 when user is valid' do
+      get "/api/v1/profile/#{profile.username}"
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

@@ -13,4 +13,14 @@ class Api::V1::ProfileController < ApplicationController
 
     render json: @profiles, status: :ok
   end
+
+  def show
+    @profile = Profile.find_by_username(params[:id])
+
+    if @profile
+      render json: @profile, status: :ok
+    else
+      render json: {}, status: :not_found
+    end
+  end
 end
