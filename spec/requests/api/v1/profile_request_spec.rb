@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'gh_scraper/request_gh'
 
 RSpec.describe "Api::V1::Profiles", type: :request do
 
@@ -86,5 +87,46 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       get "/api/v1/profile/#{profile.username}"
       expect(response).to have_http_status(:ok)
     end
+  end
+
+  describe 'POST /api/v1/profile' do
+    let(:valid_body) {
+      { 'profile': { 'username': 'foo', 'profile_url': 'https://github.com/foo' } }
+    }
+
+    let(:request_success) {
+      { error: false, status: '200', content: file_fixture('github_profile.html').read }
+    }
+
+    let(:request_not_found) {
+      { error: true, status: '404', content: '404 Not Found'}
+    }
+
+    it 'returns 400 for post body not containing required fields' do
+      post '/api/v1/profile', params: { }
+      expect(response).to have_http_status(:bad_request)
+    end
+
+    it 'returns 204 for valid post body' do
+      allow(RequestGh).to receive(:get).and_return(request_success)
+      post '/api/v1/profile', params: valid_body
+      expect(response).to have_http_status(:created)
+    end
+
+    it 'created new profile with valid post body' do
+      allow(RequestGh).to receive(:get).and_return(request_success)
+      expect {
+        post '/api/v1/profile', params: valid_body
+      }.to change(Profile, :count).by 1
+
+    end
+
+    it 'returns 404 when user is not found on github' do
+      allow(RequestGh).to receive(:get).and_return(request_not_found)
+      post '/api/v1/profile', params: valid_body
+      expect(response).to have_http_status(:not_found)
+    end
+
+
   end
 end
