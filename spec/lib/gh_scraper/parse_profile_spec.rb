@@ -1,5 +1,5 @@
 require 'nokogiri'
-require 'spec_helper'
+require 'rails_helper'
 require 'gh_scraper/parse_profile'
 
 describe ParseProfile do
@@ -7,7 +7,6 @@ describe ParseProfile do
     {
       html: file_fixture('github_profile.html').read,
       fullname: 'Yukihiro "Matz" Matsumoto',
-      username: 'matz',
       num_followers: 7800, num_following: 1, num_stars: 7,
       num_contributions_last_year: 653,
       profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4',
@@ -16,7 +15,7 @@ describe ParseProfile do
     }
   }
 
-  let(:expected_fields) { %i[username fullname num_followers num_following
+  let(:expected_fields) { %i[fullname num_followers num_following
                              num_stars num_contributions_last_year profile_img
                              organization location] }
 
@@ -58,10 +57,6 @@ describe ParseProfile do
 
     it 'parse fullname field' do
       expect(@parser_profile.fullname).to eq(html_profile[:fullname])
-    end
-
-    it 'parse username' do
-      expect(@parser_profile.username).to eq(html_profile[:username])
     end
 
     it 'parse num_followers' do

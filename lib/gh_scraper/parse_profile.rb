@@ -81,7 +81,7 @@ class ParseProfile
   private
 
   def fields
-    %i[username fullname num_followers num_following
+    %i[fullname num_followers num_following
        num_stars num_contributions_last_year profile_img
        organization location]
   end
