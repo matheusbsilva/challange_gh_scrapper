@@ -51,6 +51,13 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       expect(json.first).to eq(bar_profile.as_json)
     end
 
+    it 'returns only user that fullname includes query value' do
+      get "/api/v1/profile?q=#{bar_profile.fullname}"
+
+      expect(json.size).to eq(1)
+      expect(json.first).to eq(bar_profile.as_json)
+    end
+
     it 'returns only user that location is equal to first chars of query' do
       get "/api/v1/profile?q=#{bar_profile.location[0..4]}"
 
