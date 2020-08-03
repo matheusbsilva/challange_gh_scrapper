@@ -11,5 +11,11 @@ FactoryBot.define do
       organization { 'Foo' }
       location { 'São Paulo, Brasil' }
     end
+
+    factory :unique_profile do
+      username { 'bar' }
+      organization { 'Fuzzbar' }
+      location { 'Distrito Federal, Brasil' }
+    end
   end
 end
