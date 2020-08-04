@@ -15,27 +15,27 @@
           </b-row>
           <b-row>
             <b-col cols="4">
-              <b-icon icon="person"></b-icon>
+              <b-icon v-b-tooltip.hover title="Seguindo" icon="person"></b-icon>
               <span class="ml-2">{{ profile.num_following }}</span>
             </b-col>
             <b-col cols="4">
-              <b-icon icon="star-fill"></b-icon>
+              <b-icon v-b-tooltip.hover title="Estrelas" icon="star-fill"></b-icon>
               <span class="ml-2">{{ profile.num_stars }}</span>
             </b-col>
             <b-col cols="4" class="mb-4">
-              <b-icon icon="people-fill"></b-icon>
+              <b-icon v-b-tooltip.hover title="Seguidores" icon="people-fill"></b-icon>
               <span class="ml-2">{{ profile.num_followers }}</span>
             </b-col>
             <b-col cols="4">
-              <b-icon icon="building"></b-icon>
+              <b-icon v-b-tooltip.hover title="Organização" icon="building"></b-icon>
               <span class="ml-2">{{ profile.organization||'-' }}</span>
             </b-col>
             <b-col cols="4">
-              <b-icon icon="map"></b-icon>
+              <b-icon v-b-tooltip.hover title="Localização" icon="map"></b-icon>
               <span class="ml-2">{{ profile.location||'-' }}</span>
             </b-col>
             <b-col cols="4">
-              <b-icon icon="graph-up"></b-icon>
+              <b-icon v-b-tooltip.hover title="Contribuições no último ano" icon="graph-up"></b-icon>
               <span class="ml-2">{{ profile.num_contributions_last_year }}</span>
             </b-col>
           </b-row>
