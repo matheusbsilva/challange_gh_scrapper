@@ -6,7 +6,7 @@
         <b-col class="mt-5" lg="12">
           <h1>Scraper de perfis do Github</h1>
         </b-col>
-        <b-col class="my-5 mx-auto" cols="6">
+        <b-col class="my-5 mx-auto search-bar" lg="6">
           <SearchBar />
         </b-col>
       </b-row>
@@ -40,5 +40,9 @@ export default {
 .header-wrapper {
   background: #1a535c;
   color: #fff;
+}
+
+.header-wrapper .search-bar {
+  margin-bottom: 10rem;
 }
 </style>
