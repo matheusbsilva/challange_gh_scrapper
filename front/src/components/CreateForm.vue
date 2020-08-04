@@ -1,7 +1,7 @@
 <template>
   <div>
-   <b-modal 
-    id="modal-edit" 
+  <b-modal 
+    id="modal-create" 
     title="Formulário de usuário" 
     @ok="submit"
     >
@@ -14,8 +14,7 @@
       </b-row>
     </b-container>
   </b-modal>
-
-  <b-modal id="form-submitted">
+  <b-modal id="form-create-submitted">
     <h5>Formulário enviado</h5>
   </b-modal>
   </div>
@@ -23,16 +22,20 @@
 
 <script>
 export default {
-  name: 'EditForm',
-  props: ['id', 'username', 'profileUrl'],
+  name: 'CreateForm',
+  data() {
+    return {
+      username: '',
+      profileUrl: ''
+    }
+  },
   methods: {
     async submit() {
       const body = {'profile': { 'username': this.username, 'profile_url': this.profileUrl }}
-      const data = { 'id': this.id, 'body': body }
-      await this.$store.dispatch('profile/updateProfile', data)
+      await this.$store.dispatch('profile/createProfile', body)
 
-      this.$root.$emit('bv::hide::modal', 'modal-edit')
-      this.$root.$emit('bv::show::modal', 'form-submitted')
+      this.$root.$emit('bv::hide::modal', 'modal-create')
+      this.$root.$emit('bv::show::modal', 'form-create-submitted')
     }
   }
 }

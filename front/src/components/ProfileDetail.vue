@@ -44,16 +44,14 @@
               <b-button>Re-escanear perfil</b-button>
             </b-col>
             <b-col lg="6" class="mb-2">
-              <b-button v-b-modal.modal-edit>Atualizar perfil</b-button>
+              <b-button @click="showModal" id="updateProfile">Atualizar perfil</b-button>
             </b-col>
           </b-row>
         </b-card-text>
       </b-card>
     </b-container>
 
-    <b-modal id="modal-edit" title="Editar usuário">
-      <EditForm :id="profile.id" :username="profile.username" :profileUrl="profile.profile_url" />
-    </b-modal>
+    <EditForm :id="profile.id" :username="profile.username" :profileUrl="profile.profile_url" />
   </div>
 </template>
 
@@ -64,12 +62,14 @@ import EditForm from './EditForm'
 
 export default {
   name: 'ProfileDetail',
-  data() {
-    return {
-    }
-  },
   async mounted() {
     await this.$store.dispatch('profile/fetchProfile', this.$route.params.id)
+  },
+  methods: {
+    showModal() {
+      this.$root.$emit('bv::show::modal', 'modal-edit', '#updateProfile')
+    },
+
   },
   computed: {
     ...mapGetters({

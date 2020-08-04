@@ -52,6 +52,24 @@ const actions = {
       console.log(err)
       return
     }
+  },
+
+  async createProfile(_, data) {
+    try {
+      await http.post('/profile', data)
+    } catch(err) {
+      console.log(err)
+      return
+    }
+  },
+
+  async updateProfile(_, data) {
+    try {
+      await http.put(`/profile/${data.id}`, data.body)
+    } catch (err) {
+      console.log(err)
+      return
+    }
   }
 
 
