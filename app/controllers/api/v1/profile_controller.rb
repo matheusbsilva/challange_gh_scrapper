@@ -19,13 +19,11 @@ class Api::V1::ProfileController < ApplicationController
   end
 
   def show
-    @profile = Profile.find_by_username(params[:id])
+    @profile = Profile.find(params[:id])
+    render json: @profile, status: :ok
 
-    if @profile
-      render json: @profile, status: :ok
-    else
-      render json: {}, status: :not_found
-    end
+  rescue ActiveRecord::RecordNotFound
+    render json: {}, status: :not_found
   end
 
   def create

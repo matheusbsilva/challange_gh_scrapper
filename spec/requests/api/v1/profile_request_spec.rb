@@ -84,8 +84,13 @@ RSpec.describe "Api::V1::Profiles", type: :request do
     end
 
     it 'returns 200 when user is valid' do
-      get "/api/v1/profile/#{profile.username}"
+      get "/api/v1/profile/#{profile.id}"
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'returns expected object' do
+      get "/api/v1/profile/#{profile.id}"
+      expect(json).to eq(profile.as_json)
     end
   end
 
@@ -146,7 +151,5 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       post '/api/v1/profile', params: valid_body
       expect(response).to have_http_status(:not_found)
     end
-
-
   end
 end
