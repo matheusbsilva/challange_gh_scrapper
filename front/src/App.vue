@@ -1,17 +1,26 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <b-container fluid class="header-wrapper">
+      <b-row>
+        <b-col class="mt-5" lg="12">
+          <h1>Scraper de perfis do Github</h1>
+        </b-col>
+        <b-col class="my-5 mx-auto" cols="6">
+          <SearchBar />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import SearchBar from './components/SearchBar'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SearchBar
   }
 }
 </script>
@@ -23,6 +32,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.header-wrapper {
+  background: #457b9d;
+  color: #fff;
 }
 </style>
