@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <NavBar />
     <b-container fluid class="header-wrapper">
       <b-row>
         <b-col class="mt-5" lg="12">
@@ -16,11 +17,13 @@
 <script>
 
 import SearchBar from './components/SearchBar'
+import NavBar from './components/NavBar'
 
 export default {
   name: 'App',
   components: {
-    SearchBar
+    SearchBar,
+    NavBar
   }
 }
 </script>
@@ -35,7 +38,7 @@ export default {
 }
 
 .header-wrapper {
-  background: #457b9d;
+  background: #1a535c;
   color: #fff;
 }
 </style>
