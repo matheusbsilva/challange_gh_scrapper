@@ -54,7 +54,6 @@ export default {
       try {
         await this.$store.dispatch('profile/searchProfiles', val)
         this.results = this.getSearchResults
-        console.log(process.env.VUE_APP_ROOT_API)
       } catch (err) {
         console.log(err)
       }

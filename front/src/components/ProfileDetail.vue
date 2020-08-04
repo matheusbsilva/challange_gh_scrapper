@@ -41,17 +41,18 @@
           </b-row>
           <b-row class="my-5">
             <b-col lg="6" class="mb-2">
-              <b-button>Re-escanear perfil</b-button>
+              <b-button @click="showRescan" id="#rescanFrom">Re-escanear perfil</b-button>
             </b-col>
             <b-col lg="6" class="mb-2">
-              <b-button @click="showModal" id="updateProfile">Atualizar perfil</b-button>
+              <b-button @click="showEdit" id="updateProfile">Atualizar perfil</b-button>
             </b-col>
           </b-row>
         </b-card-text>
       </b-card>
     </b-container>
 
-    <EditForm :id="profile.id" :username="profile.username" :profileUrl="profile.profile_url" />
+    <EditForm :id="profile.id" :username="profile.username" />
+    <RescanForm :id="profile.id" :username="profile.username" :profileUrl="profile.profile_url" />
   </div>
 </template>
 
@@ -59,6 +60,7 @@
 import { mapGetters }  from 'vuex'
 import NavBar from './NavBar'
 import EditForm from './EditForm'
+import RescanForm from './RescanForm'
 
 export default {
   name: 'ProfileDetail',
@@ -66,8 +68,11 @@ export default {
     await this.$store.dispatch('profile/fetchProfile', this.$route.params.id)
   },
   methods: {
-    showModal() {
+    showEdit() {
       this.$root.$emit('bv::show::modal', 'modal-edit', '#updateProfile')
+    },
+    showRescan() {
+      this.$root.$emit('bv::show::modal', 'modal-rescan', '#rescanForm')
     },
 
   },
@@ -78,7 +83,8 @@ export default {
   },
   components: {
     NavBar,
-    EditForm
+    EditForm,
+    RescanForm
   }
 }
 </script>

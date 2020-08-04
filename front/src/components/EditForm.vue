@@ -24,7 +24,17 @@
 <script>
 export default {
   name: 'EditForm',
-  props: ['id', 'username', 'profileUrl'],
+  props: ['id', 'username'],
+  data() {
+    return {
+      githubUrl: 'https://github.com/'
+    }
+  },
+  computed: {
+    profileUrl() {
+      return this.githubUrl + this.username
+    }
+  },
   methods: {
     async submit() {
       const body = {'profile': { 'username': this.username, 'profile_url': this.profileUrl }}

@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       username: '',
-      profileUrl: ''
+      profileUrl: 'https://github.com/',
     }
   },
   methods: {
