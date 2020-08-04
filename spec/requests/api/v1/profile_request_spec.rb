@@ -152,4 +152,45 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe 'PUT /api/v1/profile/:id' do
+    let!(:profile) { create(:unique_profile) }
+    let(:valid_body) {
+      { profile: { username: 'bar', profile_url: 'https://github.com/bar' } }
+    }
+
+    let(:request_success) {
+      { error: false, status: '200', content: file_fixture('github_profile.html').read }
+    }
+
+    let(:html_content) {
+      {
+        fullname: 'Yukihiro "Matz" Matsumoto',
+        num_followers: 7800, num_following: 1, num_stars: 7,
+        num_contributions_last_year: 653,
+        profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4',
+        organization: 'Ruby Association,NaCl',
+        location: 'Matsue, Japan'
+      }
+    }
+
+    it 'returns 400 for request without valid params' do
+      put "/api/v1/profile/#{profile.id}", params: {}
+      expect(response).to have_http_status(:bad_request)
+    end
+
+    it 'returns 404 for user not found' do
+      put '/api/v1/profile/77', params: {}
+      expect(response).to have_http_status(:not_found)
+    end
+
+    it 'returns fields updated' do
+      allow(RequestGh).to receive(:get).and_return(request_success)
+      put "/api/v1/profile/#{profile.id}", params: valid_body
+      profile = Profile.first
+      fields = html_content.merge(valid_body[:profile])
+      expect(profile.as_json(except: ['id', 'created_at', 'updated_at'])).to eq(fields.stringify_keys)
+    end
+
+  end
 end

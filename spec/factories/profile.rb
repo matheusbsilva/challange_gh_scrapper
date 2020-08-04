@@ -16,6 +16,7 @@ FactoryBot.define do
 
     factory :unique_profile do
       username { 'bar' }
+      profile_url { 'https://github.com/bar' }
       fullname { 'Barfuzz' }
       organization { 'Fuzzbar' }
       location { 'Distrito Federal, Brasil' }
