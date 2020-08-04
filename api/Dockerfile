@@ -13,6 +13,7 @@ COPY . $INSTALL_PATH
 EXPOSE 3000
 
 # Add script to let restart server even if a server.pid exists
+# and migrate database
 ENTRYPOINT ["./entrypoint.sh"]
 
 CMD rails server -b 0.0.0.0 -p 3000
