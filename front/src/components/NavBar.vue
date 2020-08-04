@@ -6,16 +6,25 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-button variant="success">Adicionar perfil</b-button>
+          <b-button v-b-modal.modal-1 variant="success">Adicionar perfil</b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+
+    <b-modal id="modal-1" title="Cadastro de usuário">
+      <EditForm />
+    </b-modal>
   </div>
 </template>
 
 <script>
+import EditForm from './EditForm'
+
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  components: {
+    EditForm
+  }
 }
 </script>
 

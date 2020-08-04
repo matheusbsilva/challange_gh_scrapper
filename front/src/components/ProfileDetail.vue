@@ -6,52 +6,79 @@
         <b-card-text>
           <b-row class="mb-5">
             <b-col lg="3" class="mb-3">
-              <b-img src="https://avatars3.githubusercontent.com/u/14370340" fluid alt="Responsive image"></b-img>
+              <b-img :src="profile.profile_img" fluid alt="Responsive image"></b-img>
             </b-col>
             <b-col class="my-auto">
-              <h4>Matheus batista</h4>
-              <h6>matheusbsilva</h6>
+              <h4>{{ profile.fullname }}</h4>
+              <h6><a :href="profile.profile_url">{{ profile.username }}</a></h6>
             </b-col>
           </b-row>
           <b-row>
             <b-col cols="4">
               <b-icon icon="person"></b-icon>
-              <span class="ml-2">30</span>
+              <span class="ml-2">{{ profile.num_following }}</span>
             </b-col>
             <b-col cols="4">
               <b-icon icon="star-fill"></b-icon>
-              <span class="ml-2">22</span>
+              <span class="ml-2">{{ profile.num_stars }}</span>
             </b-col>
             <b-col cols="4" class="mb-4">
               <b-icon icon="people-fill"></b-icon>
-              <span class="ml-2">7800</span>
+              <span class="ml-2">{{ profile.num_followers }}</span>
             </b-col>
             <b-col cols="4">
               <b-icon icon="building"></b-icon>
-              <span class="ml-2">Ruby org bla</span>
+              <span class="ml-2">{{ profile.organization||'-' }}</span>
             </b-col>
             <b-col cols="4">
               <b-icon icon="map"></b-icon>
-              <span class="ml-2">Sao paulo, Brasil</span>
+              <span class="ml-2">{{ profile.location||'-' }}</span>
             </b-col>
             <b-col cols="4">
               <b-icon icon="graph-up"></b-icon>
-              <span class="ml-2">600</span>
+              <span class="ml-2">{{ profile.num_contributions_last_year }}</span>
+            </b-col>
+          </b-row>
+          <b-row class="my-5">
+            <b-col lg="6" class="mb-2">
+              <b-button>Re-escanear perfil</b-button>
+            </b-col>
+            <b-col lg="6" class="mb-2">
+              <b-button v-b-modal.modal-edit>Atualizar perfil</b-button>
             </b-col>
           </b-row>
         </b-card-text>
       </b-card>
     </b-container>
+
+    <b-modal id="modal-edit" title="Editar usuário">
+      <EditForm :id="profile.id" :username="profile.username" :profileUrl="profile.profile_url" />
+    </b-modal>
   </div>
 </template>
 
 <script>
+import { mapGetters }  from 'vuex'
 import NavBar from './NavBar'
+import EditForm from './EditForm'
 
 export default {
   name: 'ProfileDetail',
+  data() {
+    return {
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('profile/fetchProfile', this.$route.params.id)
+  },
+  computed: {
+    ...mapGetters({
+      profile: 'profile/getProfile'
+    })
+  },
   components: {
-    NavBar
+    NavBar,
+    EditForm
   }
 }
 </script>
