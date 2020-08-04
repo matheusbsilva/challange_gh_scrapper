@@ -21,20 +21,43 @@
 </template>
 
 <script>
+import { mapGetters }  from 'vuex'
 export default {
   name: 'SearchBar',
   data() {
     return {
       text: '',
       results: [
-        {'username': 'matz', 'profile_img': 'https://avatars3.githubusercontent.com/u/14370340', id: 1},
-        {'username': 'matz', 'profile_img': 'https://avatars3.githubusercontent.com/u/14370340', id: 10}
       ]
     }
   },
   computed: {
     show() {
       return this.results.length !== 0
+    },
+    ...mapGetters({
+      getSearchResults: 'profile/getSearchResults'
+    })
+  },
+  methods: {
+    clearResults() {
+      this.results = []
+    }
+  },
+  watch: {
+    async text(val) {
+      if(!val) {
+        this.clearResults()
+        return
+      }
+
+      try {
+        await this.$store.dispatch('profile/searchProfiles', val)
+        this.results = this.getSearchResults
+        console.log(process.env.VUE_APP_ROOT_API)
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 }
