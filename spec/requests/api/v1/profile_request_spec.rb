@@ -3,6 +3,9 @@ require 'gh_scraper/request_gh'
 
 RSpec.describe "Api::V1::Profiles", type: :request do
 
+  let(:url_shortened) { 'http://tinyurl.com/urlshort' }
+  before { allow(ShortURL).to receive(:shorten).and_return(url_shortened) }
+
   describe 'GET /api/v1/profile' do
     let!(:profile_list) { create_list(:profile, 20) }
     let(:profile) { profile_list.first }
@@ -118,6 +121,15 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       }
     }
 
+    let(:expected_response) {
+      {
+        **html_content,
+        profile_url: url_shortened,
+        username: valid_body[:profile][:username]
+      }
+    }
+
+
     it 'returns 400 for post body not containing required fields' do
       post '/api/v1/profile', params: { }
       expect(response).to have_http_status(:bad_request)
@@ -140,9 +152,8 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       allow(RequestGh).to receive(:get).and_return(request_success)
       post '/api/v1/profile', params: valid_body
       profile = Profile.first
-      fields = html_content.merge(valid_body[:profile])
 
-      expect(profile.as_json(except: ['id', 'created_at', 'updated_at'])).to eq(fields.stringify_keys)
+      expect(profile.as_json(except: ['id', 'created_at', 'updated_at'])).to eq(expected_response.stringify_keys)
 
     end
 
@@ -174,6 +185,14 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       }
     }
 
+    let(:expected_response) {
+      {
+        **html_content,
+        profile_url: url_shortened,
+        username: valid_body[:profile][:username]
+      }
+    }
+
     it 'returns 400 for request without valid params' do
       put "/api/v1/profile/#{profile.id}", params: {}
       expect(response).to have_http_status(:bad_request)
@@ -188,8 +207,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       allow(RequestGh).to receive(:get).and_return(request_success)
       put "/api/v1/profile/#{profile.id}", params: valid_body
       profile = Profile.first
-      fields = html_content.merge(valid_body[:profile])
-      expect(profile.as_json(except: ['id', 'created_at', 'updated_at'])).to eq(fields.stringify_keys)
+      expect(profile.as_json(except: ['id', 'created_at', 'updated_at'])).to eq(expected_response.stringify_keys)
     end
 
   end
