@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'shorturl'
 
 RSpec.describe Profile, type: :model do
   let(:inputs) { { username: 'foobar', num_followers: 10, num_following: 10,
@@ -57,6 +58,14 @@ RSpec.describe Profile, type: :model do
 
       profile = Profile.new(inputs)
       expect(profile).to be_valid
+    end
+
+    it 'it saves profile url shortened' do
+      # Stub ShortURL.shorten call
+      allow(ShortURL).to receive(:shorten).and_return('http://tinyurl.com/urlshort')
+      profile = Profile.create(inputs)
+
+      expect(profile.profile_url).to eq(ShortURL.shorten(inputs[:profile_url], :tinyurl))
     end
   end
 end
