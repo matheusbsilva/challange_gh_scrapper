@@ -22,5 +22,15 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
 
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/app
+      - /app/node_modules
+    ports:
+      - 8080:8080
+    command: npm run serve 
 volumes:
   pg-data:
