@@ -167,7 +167,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
   describe 'PUT /api/v1/profile/:id' do
     let!(:profile) { create(:unique_profile) }
     let(:valid_body) {
-      { profile: { username: 'bar', profile_url: 'https://github.com/bar' } }
+      { profile: { username: 'fuzz', profile_url: 'https://github.com/fuzz' } }
     }
 
     let(:request_success) {

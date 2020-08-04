@@ -51,6 +51,7 @@ class Api::V1::ProfileController < ApplicationController
     render json: {}, status: :not_found
   else
     profile_url = profile_params[:profile_url]
+    username = profile_params[:username]
     gh_response = RequestGh.get(profile_url)
 
     if gh_response[:error]
@@ -59,7 +60,7 @@ class Api::V1::ProfileController < ApplicationController
       parser = ParseProfile.new(gh_response[:content])
       fields = parser.parse
 
-      if profile.update(fields)
+      if profile.update(username: username, profile_url: profile_url, **fields)
         render json: profile, status: :ok
       else
         render_error(profile.errors.full_message[0], :unprocessable_entity)

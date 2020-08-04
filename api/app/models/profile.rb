@@ -11,6 +11,7 @@ class Profile < ApplicationRecord
   validates :fullname, presence: true
 
   before_create :short_profile_url
+  before_update:short_profile_url
 
   def short_profile_url
     self.profile_url = ShortURL.shorten(profile_url, :tinyurl)
