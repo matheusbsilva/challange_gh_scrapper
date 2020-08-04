@@ -8,10 +8,10 @@
         <div v-if="show" class="results-wrapper">
           <b-col v-for="result in results" :key="result.username" lg="12">
             <b-col class="text-left  my-3">
-              <a href="">
+              <router-link :to="{ name: 'profile', params: { id: result.id } }">
                 <img :src="result.profile_img" alt="">
                 <span class="ml-3">{{ result.username }}</span>
-              </a>
+              </router-link>
             </b-col>
           </b-col>
         </div>
@@ -27,6 +27,8 @@ export default {
     return {
       text: '',
       results: [
+        {'username': 'matz', 'profile_img': 'https://avatars3.githubusercontent.com/u/14370340', id: 1},
+        {'username': 'matz', 'profile_img': 'https://avatars3.githubusercontent.com/u/14370340', id: 10}
       ]
     }
   },
