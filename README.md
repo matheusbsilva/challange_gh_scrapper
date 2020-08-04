@@ -1,24 +1,35 @@
-# README
+# Desafio Github scraper 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Desenvolvimento
 
-Things you may want to cover:
+## Pré-requisitos
 
-* Ruby version
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-* System dependencies
+## Configuração
 
-* Configuration
+Primeiro é necessário configurar as variáveis de ambiente:
 
-* Database creation
+1. Copie o arquivo de template:
+```bash
+cp env.tmpl .env
+```
+2. Abra o arquivo e altere os valores padrões caso julgue necessário:
+```bash
+vi .env
+```
+As variáveis disponívels são:
 
-* Database initialization
+- `POSTGRES_USER`: Usuário do banco de dados postgresql; 
+- `POSTGRES_PASSWORD`: Senha do banco de dados postgresql;
+- `POSTGRES_HOST`: Enderço do banco de dados postgresql;
+- `POSTGRES_PORT`: Porta do banco de dados postgresql.
 
-* How to run the test suite
+## Execução
 
-* Services (job queues, cache servers, search engines, etc.)
+Para iniciar a aplicação execute na pasta raiz do projeto:
 
-* Deployment instructions
-
-* ...
+```bash
+# docker-compose up
+```
