@@ -14,6 +14,10 @@ const getters = {
 
   getProfile: (state) => {
     return state.profile
+  },
+
+  getProfileList: (state) => {
+    return state.profileList
   }
 }
 
@@ -23,10 +27,27 @@ const mutations = {
   },
   SET_PROFILE(state, payload) {
     state.profile = payload
+  },
+  
+  SET_PROFILE_LIST(state, payload) {
+    state.profileList = payload
   }
 }
 
 const actions = {
+
+  async fetchProfiles({ commit }) {
+    try {
+      const response = await http.get('/profile')
+      const payload = response.data
+
+      commit('SET_PROFILE_LIST', payload)
+
+    } catch (err) {
+      console.log(err)
+      return
+    }
+  },
 
   async searchProfiles({ commit }, query) {
     try {
