@@ -91,7 +91,7 @@ RSpec.describe "Api::V1::Profiles", type: :request do
 
   describe 'POST /api/v1/profile' do
     let(:valid_body) {
-      { 'profile': { 'username': 'foo', 'profile_url': 'https://github.com/foo' } }
+      { profile: { username: 'foo', profile_url: 'https://github.com/foo' } }
     }
 
     let(:request_success) {
@@ -100,6 +100,17 @@ RSpec.describe "Api::V1::Profiles", type: :request do
 
     let(:request_not_found) {
       { error: true, status: '404', content: '404 Not Found'}
+    }
+
+    let(:html_content) {
+      {
+        fullname: 'Yukihiro "Matz" Matsumoto',
+        num_followers: 7800, num_following: 1, num_stars: 7,
+        num_contributions_last_year: 653,
+        profile_img: 'https://avatars2.githubusercontent.com/u/30733?s=460&v=4',
+        organization: 'Ruby Association,NaCl',
+        location: 'Matsue, Japan'
+      }
     }
 
     it 'returns 400 for post body not containing required fields' do
@@ -118,6 +129,15 @@ RSpec.describe "Api::V1::Profiles", type: :request do
       expect {
         post '/api/v1/profile', params: valid_body
       }.to change(Profile, :count).by 1
+    end
+
+    it 'create new profile with right content' do
+      allow(RequestGh).to receive(:get).and_return(request_success)
+      post '/api/v1/profile', params: valid_body
+      profile = Profile.first
+      fields = html_content.merge(valid_body[:profile])
+
+      expect(profile.as_json(except: ['id', 'created_at', 'updated_at'])).to eq(fields.stringify_keys)
 
     end
 

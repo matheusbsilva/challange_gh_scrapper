@@ -47,7 +47,6 @@ class Api::V1::ProfileController < ApplicationController
         render_error(profile.errors.full_message[0], :unprocessable_entity)
       end
     end
-
   end
 
   rescue_from ActionController::ParameterMissing do |e|
